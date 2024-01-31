@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: "Student Service"
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5434/postgres
+    username: postgres
+    password: postgres
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
+  tracing:
+    sampling:
+      probability: 1.0
+
+
+tracing:
+  url: http://localhost:4318/v1/traces
+
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
